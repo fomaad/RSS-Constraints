@@ -37,7 +37,7 @@ pip install numpy pandas shapely pyyaml tqdm matplotlib seaborn
 ## Project Structure
 
 ```
-CREST2/
+RSS-Constraints/
 ├── allYaml/                    # Input: 714+ YAML simulation files
 ├── JSON_Data/                  # Output: Converted JSON files with bounding boxes
 ├── CSV_Data/                   # Output: Distance calculations and metrics
@@ -92,30 +92,30 @@ Edit `parameters.py` to adjust:
 ### Safety Constraint Parameters
 ```python
 # Original RSS Constraint
-RSS_REACTION_TIME = 1.0          # seconds
-RSS_MAX_ACCELERATION = 3.0       # m/s²
-RSS_EGO_BRAKING = 4.0           # m/s²
-RSS_NPC_BRAKING = 8.0           # m/s²
+RSS_REACTION_TIME          # seconds
+RSS_MAX_ACCELERATION       # m/s²
+RSS_EGO_BRAKING           # m/s²
+RSS_NPC_BRAKING           # m/s²
 
 # Enhanced Safety Constraint
-NEW_REACTION_TIME = 0.5          # seconds
-NEW_MAX_ACCELERATION = 5.0       # m/s²
-MAX_DISTANCE_NOISE = 2.0         # meters
-MAX_VELOCITY_ERROR = 1.5         # m/s
-MAX_PERCEPTION_LAG = 0.4         # seconds
+NEW_REACTION_TIME          # seconds
+NEW_MAX_ACCELERATION       # m/s²
+MAX_DISTANCE_NOISE         # meters
+MAX_VELOCITY_ERROR         # m/s
+MAX_PERCEPTION_LAG         # seconds
 ```
 
 ### Data Validation Parameters
 ```python
-MIN_PERCEPTION_TIMESTAMPS = 10   # Minimum valid perception data points
-MAX_TIME_DIFF_THRESHOLD = 0.2    # Max time gap between timestamps (seconds)
-MAX_DISTANCE_CHANGE_THRESHOLD = 10.0  # Max distance change between frames (meters)
+MIN_PERCEPTION_TIMESTAMPS   # Minimum valid perception data points
+MAX_TIME_DIFF_THRESHOLD    # Max time gap between timestamps (seconds)
+MAX_DISTANCE_CHANGE_THRESHOLD  # Max distance change between frames (meters)
 ```
 
 ### Crash Detection Parameters
 ```python
-CRASH_DISTANCE_THRESHOLD = 0.5   # Distance threshold for crash detection (meters)
-CRASH_CONSECUTIVE_FRAMES = 3     # Required consecutive frames for crash confirmation
+CRASH_DISTANCE_THRESHOLD   # Distance threshold for crash detection (meters)
+CRASH_CONSECUTIVE_FRAMES     # Required consecutive frames for crash confirmation
 ```
 
 ## Data Processing Pipeline
@@ -174,69 +174,3 @@ Where:
 - `Results/safety_analysis_summary.csv` - Detailed per-experiment results
 - `Results/safety_analysis_report.md` - Comprehensive analysis report
 - `CSV_Data/processing_summary.csv` - Data processing statistics
-
-### Analysis Metrics
-- **Crash Rate**: Percentage of experiments resulting in crashes
-- **Predictive Recall**: Percentage of crashes predicted before occurrence
-- **Violation Detection**: Total safety constraint violations detected
-- **Early Warning Capability**: Time between violation and crash
-
-## Expected Findings
-
-Based on previous analysis:
-
-- **Crash Rate**: ~15.9% (114/715 experiments)
-- **Critical Pattern**: `deceleration=0` scenarios have 100% crash rate
-- **RSS Predictive Recall**: 0% (reactive, not predictive)
-- **Enhanced Constraint Recall**: 0% (also reactive)
-- **Key Insight**: Both constraints detect violations concurrent with crashes, not before
-
-## Data Quality Validation
-
-The framework includes robust validation:
-
-1. **Minimum Data Requirements**: Experiments need 10+ valid perception timestamps
-2. **Temporal Consistency**: Consecutive timestamps must be within reasonable time gaps
-3. **Distance Consistency**: Perception distances cannot change dramatically between frames
-4. **Geometric Validation**: Bounding boxes must form valid polygons
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Missing Dependencies**: Install required packages using pip
-2. **No YAML Files**: Ensure `allYaml/` directory contains .yaml files
-3. **Insufficient Perception Data**: Many experiments may be filtered out due to sparse perception data
-4. **Memory Issues**: Large datasets may require processing in batches
-
-### Debug Mode
-Add print statements or modify `tqdm` parameters for more detailed progress tracking.
-
-## Research Applications
-
-This framework enables:
-
-- **Safety Standard Evaluation**: Testing effectiveness of current AV safety constraints
-- **Constraint Development**: Developing new predictive safety formulations  
-- **Simulation Validation**: Validating AWSIM simulation fidelity
-- **Risk Assessment**: Quantifying crash prediction capabilities
-
-## Future Enhancements
-
-- **Multi-NPC Analysis**: Extend beyond single NPC scenarios
-- **3D Distance Calculations**: Include Y-axis for full 3D analysis
-- **Machine Learning Integration**: Develop ML-based predictive models
-- **Real-time Processing**: Optimize for real-time safety monitoring
-
-## Contributing
-
-When modifying the framework:
-
-1. Update `parameters.py` for new configuration options
-2. Maintain data validation consistency across all steps
-3. Document new safety constraint formulations
-4. Update this README with significant changes
-
-## License
-
-This framework is designed for autonomous vehicle safety research and evaluation. 
