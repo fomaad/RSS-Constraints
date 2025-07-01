@@ -14,8 +14,6 @@ This framework processes 715 YAML files containing AWSIM autonomous driving simu
 - `shapely` - Geometric operations for polygon distances
 - `pyyaml` - YAML file parsing
 - `tqdm` - Progress bars
-- `matplotlib` & `seaborn` - Visualization (optional)
-
 
 ## Usage
 
