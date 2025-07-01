@@ -4,12 +4,12 @@ A comprehensive framework for analyzing autonomous vehicle safety using AWSIM si
 
 ## Overview
 
-This framework processes 714+ YAML files containing AWSIM autonomous driving simulation data to:
+This framework processes 700+ YAML files containing AWSIM autonomous driving simulation data to:
 
 1. **Extract 2D bounding boxes** and velocity data from 3D vehicle simulations
 2. **Calculate distances** between ego vehicle, NPCs, and perceived objects
-3. **Detect crashes** using consecutive proximity measurements
-4. **Evaluate safety constraints** to determine their predictive capability
+3. **Detect crashes**
+4. **Evaluate safety constraints** to determine their capability
 5. **Compare** original RSS vs. enhanced safety constraint performance
 
 ## Key Research Question
