@@ -1,30 +1,12 @@
-# Autonomous Vehicle Safety Evaluation Framework
-
-A comprehensive framework for analyzing autonomous vehicle safety using AWSIM simulation data. This system evaluates the predictive capability of safety constraints (original RSS and enhanced formulations) in crash scenarios.
-
 ## Overview
 
-This framework processes 700+ YAML files containing AWSIM autonomous driving simulation data to:
+This framework processes 715 YAML files containing AWSIM autonomous driving simulation data to:
 
 1. **Extract 2D bounding boxes** and velocity data from 3D vehicle simulations
 2. **Calculate distances** between ego vehicle, NPCs, and perceived objects
 3. **Detect crashes**
 4. **Evaluate safety constraints** to determine their capability
 5. **Compare** original RSS vs. enhanced safety constraint performance
-
-## Key Research Question
-
-**Can safety constraints predict crashes before they occur, or are they merely reactive?**
-
-Based on previous analysis, both safety constraints failed to provide early warning (0% predictive recall), only detecting violations concurrent with crashes.
-
-## Installation
-
-### Prerequisites
-
-```bash
-pip install numpy pandas shapely pyyaml tqdm matplotlib seaborn
-```
 
 ### Required Python Packages
 - `numpy` - Numerical computations
@@ -34,30 +16,13 @@ pip install numpy pandas shapely pyyaml tqdm matplotlib seaborn
 - `tqdm` - Progress bars
 - `matplotlib` & `seaborn` - Visualization (optional)
 
-## Project Structure
-
-```
-RSS-Constraints/
-├── allYaml/                    # Input: 714+ YAML simulation files
-├── JSON_Data/                  # Output: Converted JSON files with bounding boxes
-├── CSV_Data/                   # Output: Distance calculations and metrics
-├── Results/                    # Output: Final analysis results
-├── parameters.py               # Configuration parameters
-├── yaml_to_json_improved.py    # Step 1: YAML → JSON conversion
-├── json_to_csv_improved.py     # Step 2: JSON → CSV with distances
-├── safety_analysis.py          # Step 3: Crash detection & constraint analysis
-├── run_complete_analysis.py    # Master script to run entire pipeline
-└── README.md                   # This file
-```
 
 ## Usage
 
-### Quick Start (Complete Pipeline)
 
 ```bash
 python run_complete_analysis.py
 ```
-
 This runs all three steps automatically:
 1. YAML → JSON conversion
 2. JSON → CSV distance calculation
@@ -115,7 +80,6 @@ MAX_DISTANCE_CHANGE_THRESHOLD  # Max distance change between frames (meters)
 ### Crash Detection Parameters
 ```python
 CRASH_DISTANCE_THRESHOLD   # Distance threshold for crash detection (meters)
-CRASH_CONSECUTIVE_FRAMES     # Required consecutive frames for crash confirmation
 ```
 
 ## Data Processing Pipeline
@@ -130,17 +94,14 @@ CRASH_CONSECUTIVE_FRAMES     # Required consecutive frames for crash confirmatio
 - Creates Shapely polygons from bounding box corners
 - Calculates ego-NPC distance (ground truth)
 - Calculates ego-perception distance (closest perceived object)
-- Validates data consistency and filters invalid experiments
-- **Only processes experiments with 10+ valid perception timestamps**
-
+- Keeps values for velocity
+- 
 ### Step 3: Safety Analysis
-- **Crash Detection**: 3+ consecutive frames with distance < 0.5m
-- **RSS Constraint Evaluation**: Original responsibility-sensitive safety formula
-- **Enhanced Constraint Evaluation**: Improved formulation with noise consideration
-- **Predictive Analysis**: Determines if violations occur before crashes
-- **Comparative Analysis**: RSS vs. Enhanced constraint performance
+- **Crash Detection**: frame in the CSV with a crash
+- **RSS Constraint Evaluation**: Original rss formula
+- **Enhanced Constraint Evaluation**: Improved formula
+- **Comparative Analysis**: RSS vs Improved vs Crash Analysis
 
-## Safety Constraint Formulations
 
 ### Original RSS Constraint
 ```
@@ -166,11 +127,3 @@ Where:
 - `ε_max`: Maximum distance perception noise (2.0m)
 - `v_eff`: Effective velocity accounting for uncertainty
 - `Δd`: Lag compensation term
-- Updated parameters for more conservative safety margins
-
-## Output Files
-
-### Key Results
-- `Results/safety_analysis_summary.csv` - Detailed per-experiment results
-- `Results/safety_analysis_report.md` - Comprehensive analysis report
-- `CSV_Data/processing_summary.csv` - Data processing statistics
