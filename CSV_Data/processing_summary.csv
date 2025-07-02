@@ -1,2 +1,0 @@
-json_path,csv_path,frame_count,valid_perception_frames,validation_status,consistency_status
-JSON_Data/cutin0-10-1_data.json,CSV_Data/cutin0-10-1_distances.csv,1222,160,Valid,Valid

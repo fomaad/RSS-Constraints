@@ -1,2 +1,0 @@
-file_name,total_frames,frames_with_perception,crashed,crash_count,first_crash_time,rss_violations,new_violations,rss_predicted_crashes,new_predicted_crashes,rss_early_warnings,new_early_warnings
-cutin0-10-1_distances.csv,1222,160,False,0,,0,0,0,0,0,0
