@@ -158,13 +158,17 @@ def process_json_to_csv(json_path):
                 'ego_position_z': np.nan,
                 'npc1_position_x': np.nan,
                 'npc1_position_z': np.nan,
-                'perception_object_count': 0
+                'perception_object_count': 0,
+                'ego_velocity_lateral': np.nan,
+                'npc1_velocity_lateral': np.nan,
+                'closest_perception_velocity_lateral': np.nan,
             }
             
             # Extract ego data
             ego_data = frame.get('ego', {})
             if ego_data.get('velocity') and ego_data['velocity'].get('magnitude') is not None:
                 row['ego_velocity_magnitude'] = ego_data['velocity']['magnitude']
+                row['ego_velocity_lateral'] = ego_data['velocity'].get('y', np.nan)
             
             if ego_data.get('position'):
                 row['ego_position_x'] = ego_data['position']['x']
@@ -174,6 +178,7 @@ def process_json_to_csv(json_path):
             npc1_data = frame.get('npc1', {})
             if npc1_data.get('velocity') and npc1_data['velocity'].get('magnitude') is not None:
                 row['npc1_velocity_magnitude'] = npc1_data['velocity']['magnitude']
+                row['npc1_velocity_lateral'] = npc1_data['velocity'].get('y', np.nan)
             
             if npc1_data.get('position'):
                 row['npc1_position_x'] = npc1_data['position']['x']
@@ -196,6 +201,8 @@ def process_json_to_csv(json_path):
                 
                 if closest_obj and closest_obj.get('velocity') and closest_obj['velocity'].get('magnitude') is not None:
                     row['closest_perception_velocity'] = closest_obj['velocity']['magnitude']
+                    row['closest_perception_velocity_lateral'] = closest_obj['velocity'].get('y', np.nan)
+
             
             csv_data.append(row)
             

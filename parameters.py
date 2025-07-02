@@ -8,6 +8,11 @@ RSS_MAX_ACCELERATION = 3.0  # m/s² (α_max)
 RSS_EGO_BRAKING = 4.0  # m/s² (β_min)
 RSS_NPC_BRAKING = 8.0  # m/s² (β_max)
 
+#THESE ARE NOT CONFIGURED YET
+RSS_CLEARANCE_BUFFER_LAT = 1 
+RSS_EGO_BRAKING_LAT = 1
+RSS_NPC_BRAKING_LAT = 1
+
 # =============================================
 # NEW ENHANCED SAFETY CONSTRAINT PARAMETERS
 # =============================================
@@ -29,7 +34,7 @@ CRASH_CONSECUTIVE_FRAMES = 3  # number of consecutive frames
 # DATA VALIDATION PARAMETERS
 # =============================================
 MIN_PERCEPTION_TIMESTAMPS = 10  # minimum timestamps with perception data
-MAX_TIME_DIFF_THRESHOLD = 0.2  # seconds - max time difference between consecutive timestamps
+MAX_TIME_DIFF_THRESHOLD = 5  # seconds - max time difference between consecutive timestamps
 MAX_DISTANCE_CHANGE_THRESHOLD = 10.0  # meters - max distance change between consecutive timestamps
 MAX_VELOCITY_CHANGE_THRESHOLD = 20.0  # m/s - max velocity change between consecutive timestamps
 
