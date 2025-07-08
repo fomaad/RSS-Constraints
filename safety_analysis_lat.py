@@ -10,7 +10,7 @@ class SafetyAnalyzerLat:
     def __init__(self):
         self.results = []
 
-    def calculate_original_lateral_constraint(self, ego_v_lat, perception_d, npc_v_lat):
+    def calculate_original_lateral_constraint(self, ego_v_lat, perception_d, npc_v_lat, ego_break_lat, npc_break_lat):
         """
         Calculate original lateral RSS constraint:
         d_perception ≥ mew + (u·ρ) + (u² / 2·β1) - (v_lat·(σ + ρ) + v_lat² / 2·β2)
@@ -23,8 +23,8 @@ class SafetyAnalyzerLat:
         rho = RSS_REACTION_TIME
         sigma = MAX_PERCEPTION_LAG
         mew = RSS_CLEARANCE_BUFFER_LAT
-        beta1 = RSS_EGO_BRAKING_LAT
-        beta2 = RSS_NPC_BRAKING_LAT
+        beta1 = ego_break_lat
+        beta2 = npc_break_lat
 
         term1 = mew + ego_v_lat * rho + (ego_v_lat**2) / (2 * beta1)
         term2 = v_npc * (sigma + rho) + (v_npc**2) / (2 * beta2)
@@ -34,7 +34,7 @@ class SafetyAnalyzerLat:
         
         return required, satisfied
 
-    def calculate_new_lateral_constraint(self, ego_v_lat, perception_d, npc_v_lat, timestamp_lag=0):
+    def calculate_new_lateral_constraint(self, ego_v_lat, perception_d, npc_v_lat, ego_break_lat, npc_break_lat, timestamp_lag=0):
         """
         Calculate new enhanced safety constraint:
         (p_t - ε_max) ≥ mew + u·ρ + (u² / 2·β1) - (v_lat * (σ + ρ) + v_lat² / 2·β2) + Δd
@@ -47,8 +47,9 @@ class SafetyAnalyzerLat:
         rho = NEW_REACTION_TIME
         sigma = MAX_PERCEPTION_LAG
         mew = RSS_CLEARANCE_BUFFER_LAT
-        beta1 = RSS_EGO_BRAKING_LAT
-        beta2 = RSS_NPC_BRAKING_LAT
+        beta1 = ego_break_lat
+        beta2 = npc_break_lat
+
         epsilon = MAX_DISTANCE_NOISE
 
         v_eff = max(0, v_npc - MAX_VELOCITY_ERROR - beta2 * sigma)
@@ -100,12 +101,19 @@ class SafetyAnalyzerLat:
 
         for idx, row in df.iterrows():
             timestamp = row['timestamp']
-            ego_velocity = row.get('ego_velocity_lateral', np.nan)
+
+            v_ego_lat = row.get('ego_velocity_lateral', np.nan)
+            v_npc_lat = row.get('npc1_velocity_latral', np.nan) 
+
+            ego_velocity = v_ego_lat if v_ego_lat > 0 else np.nan  # when positive
+            ego_breaking = -v_ego_lat if v_ego_lat < 0 else np.nan  # when negative, convert to positive magnitude
+            npc_breaking = -v_npc_lat if v_npc_lat < 0 else np.nan  # when negative, convert to positive magnitude
+
             perception_distance = row.get('ego_perception_distance', np.nan)
             perception_velocity = row.get('closest_perception_velocity_lateral', np.nan)
 
             rss_required, rss_satisfied = self.calculate_original_lateral_constraint(
-                ego_velocity, perception_distance, perception_velocity
+                ego_velocity, perception_distance, perception_velocity, ego_breaking, npc_breaking
             )
 
             if not np.isnan(rss_required) and not rss_satisfied:
@@ -118,7 +126,7 @@ class SafetyAnalyzerLat:
                 })
 
             new_required, new_satisfied = self.calculate_new_lateral_constraint(
-                ego_velocity, perception_distance, perception_velocity
+                ego_velocity, perception_distance, perception_velocity, ego_breaking, npc_breaking
             )
 
             if not np.isnan(new_required) and not new_satisfied:

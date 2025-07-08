@@ -143,7 +143,6 @@ def extract_data_from_yaml_optimized(yaml_data, output_path):
                 "z": ego_velocity[2],
                 "magnitude": magnitude,
                 "source": velocity_source,
-                "lateral": ego_velocity[2],
             }
             
             # Get ego bounding box
@@ -189,7 +188,6 @@ def extract_data_from_yaml_optimized(yaml_data, output_path):
                     "z": npc_velocity[2], 
                     "magnitude": magnitude,
                     "source": velocity_source,
-                    "lateral": npc_velocity[2],
                 }
                 
                 # Get NPC bounding box

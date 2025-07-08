@@ -170,7 +170,7 @@ def process_json_to_csv(json_path):
             ego_data = frame.get('ego', {})
             if ego_data.get('velocity') and ego_data['velocity'].get('magnitude') is not None:
                 row['ego_velocity_magnitude'] = ego_data['velocity']['magnitude']
-                row['ego_velocity_lateral'] = ego_data['velocity'].get('y', np.nan)
+                row['ego_velocity_lateral'] = ego_data['velocity'].get('z', np.nan)
             
             if ego_data.get('position'):
                 row['ego_position_x'] = ego_data['position']['x']
@@ -180,7 +180,7 @@ def process_json_to_csv(json_path):
             npc1_data = frame.get('npc1', {})
             if npc1_data.get('velocity') and npc1_data['velocity'].get('magnitude') is not None:
                 row['npc1_velocity_magnitude'] = npc1_data['velocity']['magnitude']
-                row['npc1_velocity_lateral'] = npc1_data['velocity'].get('y', np.nan)
+                row['npc1_velocity_lateral'] = npc1_data['velocity'].get('z', np.nan)
             
             if npc1_data.get('position'):
                 row['npc1_position_x'] = npc1_data['position']['x']
