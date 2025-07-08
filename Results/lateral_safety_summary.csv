@@ -1,0 +1,11 @@
+file_name,total_frames,frames_with_perception,crashed,crash_count,first_crash_time,rss_violations,new_violations,rss_predicted_crashes,new_predicted_crashes,rss_early_warnings,new_early_warnings
+cutin0-10-6_distances.csv,1202,277,False,0,,0,0,0,0,0,0
+cutin0-10-9_distances.csv,2399,394,False,0,,0,0,0,0,0,0
+cutin0-10-7_distances.csv,2360,462,False,0,,0,0,0,0,0,0
+cutin0-10-8_distances.csv,2352,428,False,0,,0,0,0,0,0,0
+cutin0-10-4_distances.csv,1216,65,False,0,,0,0,0,0,0,0
+cutin0-10-3_distances.csv,1215,75,False,0,,0,0,0,0,0,0
+cutin0-10-1_distances.csv,1222,160,False,0,,0,0,0,0,0,0
+cutin0-10-2_distances.csv,1214,64,False,0,,0,0,0,0,0,0
+cutin0-10-5_distances.csv,1209,267,False,0,,0,0,0,0,0,0
+cutin0-10-10_distances.csv,1204,294,False,0,,0,0,0,0,0,0

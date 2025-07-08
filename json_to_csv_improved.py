@@ -151,6 +151,7 @@ def process_json_to_csv(json_path):
                 'timestamp': timestamp,
                 'ego_velocity_magnitude': np.nan,
                 'npc1_velocity_magnitude': np.nan,
+                
                 'ego_npc_distance': np.nan,
                 'ego_perception_distance': np.nan,
                 'closest_perception_velocity': np.nan,
@@ -159,6 +160,7 @@ def process_json_to_csv(json_path):
                 'npc1_position_x': np.nan,
                 'npc1_position_z': np.nan,
                 'perception_object_count': 0,
+
                 'ego_velocity_lateral': np.nan,
                 'npc1_velocity_lateral': np.nan,
                 'closest_perception_velocity_lateral': np.nan,
